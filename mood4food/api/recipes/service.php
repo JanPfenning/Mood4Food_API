@@ -1,7 +1,7 @@
 <?php
 
     function getRecipes($join, $where, $limit, $offset, $order){
-        require "../../database/db.php";
+        require "../../database/config.php";
         require "../ingredients/service.php";
         require "../materials/service.php";
         $array = [];

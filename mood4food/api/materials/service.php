@@ -1,7 +1,7 @@
 <?php
 
     function getMaterials($where, $limit, $offset){
-        require "../../database/db.php";
+        require "../../database/config.php";
 
         $array = [];
         $materials = mysqli_query($conn, 
@@ -24,7 +24,7 @@
     }
 
     function getDistinctMaterials($where, $limit, $offset){
-        require "../../database/db.php";
+        require "../../database/config.php";
 
         $array = [];
         $materials = mysqli_query($conn, 

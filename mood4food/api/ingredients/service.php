@@ -1,7 +1,7 @@
 <?php
 
     function getIngredients($where, $limit, $offset){
-        require "../../database/db.php";
+        require "../../database/config.php";
 
         $array = [];
         $ingredients = mysqli_query($conn, 
@@ -24,7 +24,7 @@
     }
 
     function getDistinctIngredients($where, $limit, $offset){
-        require "../../database/db.php";
+        require "../../database/config.php";
 
         $array = [];
         $ingredients = mysqli_query($conn, 

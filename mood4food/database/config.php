@@ -1,20 +1,22 @@
 <?php
 
+    include "../../env/env.php";
+
     switch($_SERVER['SERVER_NAME']){
         case "localhost":
             $conn = mysqli_connect(
-                "localhost",
-                "root",
-                "",
-                "mood4food"
+                $dev_dbHost,
+                $dev_dbUser,
+                $dev_dbPassword,
+                $dev_dbName
             );
             break;
         default:
             $conn = mysqli_connect(
-                "rdbms.strato.de",
-                "dbu641369",
-                "fa1laf2fel8#",
-                "dbs1759467"
+                $dbHost,
+                $dbUser,
+                $dbPassword,
+                $dbName
             );
             break;
     }
