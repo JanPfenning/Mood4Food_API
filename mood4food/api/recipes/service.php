@@ -1,6 +1,6 @@
 <?php
 
-    function getRecipes($join, $where, $limit, $offset, $order){
+    function getRecipes($join, $where, $having, $order, $limit, $offset){
         require "../../database/config.php";
         require "../ingredients/service.php";
         require "../materials/service.php";
@@ -11,9 +11,10 @@
             $join." ".
             ($where != "" ? "where ".$where." " : "").
             ($join != "" ? "group by r.recipeId " : "").
+            ($having != "" ? "having ".$having." " : "").
+            ($order != "" ? "order by ".$order." " : "").
             "limit ".$limit." ".
-            "offset ".$offset." ".
-            ($order != "" ? "order by ".$order." " : "")
+            "offset ".$offset." "
         );
         while($row = mysqli_fetch_array($recipes)){
             $recipe = [];
