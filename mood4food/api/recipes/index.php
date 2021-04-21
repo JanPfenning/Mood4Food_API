@@ -9,7 +9,7 @@
             if(isset($_GET["recipeId"])){
                 $recipeId = $_GET["recipeId"];
 
-                $result = getRecipes("recipeId = '".$recipeId."'", 1, 0)[0];
+                $result = getRecipes("", "recipeId = '".$recipeId."'", "", "", 1, 0)[0];
             }else{
                 $limit = 50;
                 $offset = 0;
@@ -54,9 +54,6 @@
                         }
                     }
                 }
-
-                
-
                 if($likeorder != ""){
                     $order .= ($order == "" ? "" : ", ")."(".$likeorder.") desc";
                 }
