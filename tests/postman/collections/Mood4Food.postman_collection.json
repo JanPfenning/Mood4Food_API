@@ -1,0 +1,367 @@
+{
+	"info": {
+		"_postman_id": "3905c480-cad3-4fe0-86de-fd9e88ab56bd",
+		"name": "Mood4Food",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get all recipes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an array\", function () {\r",
+							"    var recipes = pm.response.json();\r",
+							"    pm.expect(Array.isArray(recipes)).eq(true);\r",
+							"});\r",
+							"pm.test(\"Recipe limit is correctly set\", function () {\r",
+							"    var recipes = pm.response.json();\r",
+							"    pm.expect(recipes.length).lte(50);\r",
+							"});\r",
+							"pm.test(\"The recipes in the response array include all neccessary information\", function () {\r",
+							"    var recipes = pm.response.json();\r",
+							"    for(let recipe of recipes){\r",
+							"        pm.expect(recipe).property(\"recipeId\");\r",
+							"        pm.expect(recipe).property(\"title\");\r",
+							"        pm.expect(recipe).property(\"description\");\r",
+							"        pm.expect(recipe).property(\"imageUri\");\r",
+							"        pm.expect(recipe).property(\"ingredients\");\r",
+							"        for(let ingredient of recipe.ingredients){\r",
+							"            pm.expect(ingredient).property(\"ingredientId\");\r",
+							"            pm.expect(ingredient).property(\"name\");\r",
+							"            pm.expect(ingredient).property(\"amount\");\r",
+							"            pm.expect(ingredient).property(\"recipeId\");\r",
+							"        }\r",
+							"        pm.expect(recipe).property(\"materials\");\r",
+							"        for(let material of recipe.materials){\r",
+							"            pm.expect(material).property(\"materialId\");\r",
+							"            pm.expect(material).property(\"name\");\r",
+							"            pm.expect(material).property(\"recipeId\");\r",
+							"        }\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/recipes",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"recipes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Limit number of recipes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Recipe limit is correctly set\", function () {\r",
+							"    var recipes = pm.response.json();\r",
+							"    pm.expect(recipes.length).lte(10);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/recipes?limit=10",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"recipes"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search for recipe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"The title of the returned recipes includes the keyword\", function () {\r",
+							"    var recipes = pm.response.json();\r",
+							"    for(let recipe of recipes){\r",
+							"        pm.expect(recipe.title.toLowerCase().includes(\"pizza\")).eq(true);\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/recipes?search=pizza",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"recipes"
+					],
+					"query": [
+						{
+							"key": "search",
+							"value": "pizza"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get single recipe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an object\", function () {\r",
+							"    var recipes = pm.response.json();\r",
+							"    pm.expect(Array.isArray(recipes)).eq(false);\r",
+							"});\r",
+							"pm.test(\"The recipe includes all neccessary information\", function () {\r",
+							"    var recipe = pm.response.json();\r",
+							"    pm.expect(recipe).property(\"recipeId\");\r",
+							"    pm.expect(recipe).property(\"title\");\r",
+							"    pm.expect(recipe).property(\"description\");\r",
+							"    pm.expect(recipe).property(\"imageUri\");\r",
+							"    pm.expect(recipe).property(\"ingredients\");\r",
+							"    for(let ingredient of recipe.ingredients){\r",
+							"        pm.expect(ingredient).property(\"ingredientId\");\r",
+							"        pm.expect(ingredient).property(\"name\");\r",
+							"        pm.expect(ingredient).property(\"amount\");\r",
+							"        pm.expect(ingredient).property(\"recipeId\");\r",
+							"    }\r",
+							"    pm.expect(recipe).property(\"materials\");\r",
+							"    for(let material of recipe.materials){\r",
+							"        pm.expect(material).property(\"materialId\");\r",
+							"        pm.expect(material).property(\"name\");\r",
+							"        pm.expect(material).property(\"recipeId\");\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/recipes?recipeId=401",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"recipes"
+					],
+					"query": [
+						{
+							"key": "recipeId",
+							"value": "401"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all ingredients",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an array\", function () {\r",
+							"    var ingredients = pm.response.json();\r",
+							"    pm.expect(Array.isArray(ingredients)).eq(true);\r",
+							"});\r",
+							"pm.test(\"Ingredient limit is correctly set\", function () {\r",
+							"    var ingredients = pm.response.json();\r",
+							"    pm.expect(ingredients.length).lte(50);\r",
+							"});\r",
+							"pm.test(\"The ingredients in the response array include all neccessary information\", function () {\r",
+							"    var ingredients = pm.response.json();\r",
+							"    for(let ingredient of ingredients){\r",
+							"        pm.expect(ingredient).property(\"name\");\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/ingredients",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"ingredients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Limit number of ingredients",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Ingredient limit is correctly set\", function () {\r",
+							"    var ingredients = pm.response.json();\r",
+							"    pm.expect(ingredients.length).lte(10);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/ingredients?limit=10",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"ingredients"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all materials",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an array\", function () {\r",
+							"    var materials = pm.response.json();\r",
+							"    pm.expect(Array.isArray(materials)).eq(true);\r",
+							"});\r",
+							"pm.test(\"Material limit is correctly set\", function () {\r",
+							"    var materials = pm.response.json();\r",
+							"    pm.expect(materials.length).lte(50);\r",
+							"});\r",
+							"pm.test(\"The materials in the response array include all neccessary information\", function () {\r",
+							"    var materials = pm.response.json();\r",
+							"    for(let material of materials){\r",
+							"        pm.expect(material).property(\"name\");\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/materials",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"materials"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Limit number of materials",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Material limit is correctly set\", function () {\r",
+							"    var materials = pm.response.json();\r",
+							"    pm.expect(materials.length).lte(10);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/materials?limit=10",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"materials"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
