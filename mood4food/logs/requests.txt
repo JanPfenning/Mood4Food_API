@@ -1,1 +1,2 @@
 2021-05-12 15:03:42 | /mood4food_api/mood4food/api/recipes/?limit=1
+2021-05-12 15:07:37 | /mood4food_api/mood4food/api/materials/
