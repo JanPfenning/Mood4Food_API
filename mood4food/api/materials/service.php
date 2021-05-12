@@ -4,7 +4,7 @@
         require "../../database/config.php";
 
         $array = [];
-        $materials = mysqli_query($conn, 
+        $materials = mysqli_query($conn,
             "select * ".
             "from materials ".
             ($where != "" ? "where ".$where." " : "").
@@ -27,7 +27,7 @@
         require "../../database/config.php";
 
         $array = [];
-        $materials = mysqli_query($conn, 
+        $materials = mysqli_query($conn,
             "select distinct name ".
             "from materials ".
             ($where != "" ? "where ".$where." " : "").

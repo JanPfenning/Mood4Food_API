@@ -1,6 +1,7 @@
 <?php
 
     require "service.php";
+    require "../proxy.php";
 
     switch($_SERVER["REQUEST_METHOD"]){
         case "GET":

@@ -1,11 +1,14 @@
 <?php
 
-    function getRecipes($join, $where, $having, $order, $limit, $offset){
+class RecipeService implements Service
+{
+
+    public function request($join, $where, $having, $order, $limit, $offset){
         require "../../database/config.php";
         require "../ingredients/service.php";
         require "../materials/service.php";
         $array = [];
-        $recipes = mysqli_query($conn, 
+        $recipes = mysqli_query($conn,
             "select * ".
             "from recipes as r ".
             $join." ".
@@ -29,5 +32,7 @@
         }
         return $array;
     }
+
+}
 
 ?>
