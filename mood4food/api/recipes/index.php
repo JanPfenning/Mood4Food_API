@@ -1,6 +1,14 @@
 <?php
 
-    require "service.php";
+    require "../Proxy.php";
+    require "./RecipeService.php";
+
+    $service = new RecipeService();
+    $proxy = new Proxy($service);
+
+    function serviceRequest(Service $service, $join, $where, $having, $order, $limit, $offset){
+        return $service->request($join, $where, $having, $order, $limit, $offset);
+    }
 
     switch($_SERVER["REQUEST_METHOD"]){
         case "GET":
@@ -58,7 +66,7 @@
                     $order .= ($order == "" ? "" : ", ")."(".$likeorder.") desc";
                 }
 
-                $result = getRecipes($join, $where, $having, $order, $limit, $offset);
+                $result = serviceRequest($proxy, $join, $where, $having, $order, $limit, $offset);
             }
 
             header("Content-type: application/json; charset=utf-8");

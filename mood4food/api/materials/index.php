@@ -1,6 +1,14 @@
 <?php
 
-    require "service.php";
+    require "../Proxy.php";
+    require "./MaterialService.php";
+
+    $service = new MaterialService();
+    $proxy = new Proxy($service);
+
+    function serviceRequest(Service $service, $where, $limit, $offset){
+        return $service->request("", $where, "", "", $limit, $offset);
+    }
 
     switch($_SERVER["REQUEST_METHOD"]){
         case "GET":
@@ -17,7 +25,7 @@
             header("Content-type: application/json; charset=utf-8");
             http_response_code(200);
 
-            echo json_encode(getDistinctMaterials("", $limit, $offset));
+            echo json_encode(serviceRequest($proxy, "", $limit, $offset));
 
             break;
         default:
